@@ -78,3 +78,53 @@ class Ratio:
     def to_string(self) -> str:
         ''' convert the rational number to string '''
         return f"{self.numer}/{self.denom}"
+    
+    def __add__(self, other: 'Ratio') -> 'Ratio':
+        return self.add(other)
+
+    def __sub__(self, other: 'Ratio') -> 'Ratio':
+        return self.sub(other)
+
+    def __mul__(self, other: 'Ratio') -> 'Ratio':
+        return self.mul(other)
+
+    def __floordiv__(self, other: 'Ratio') -> 'Ratio':
+        return self.div(other)
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, Ratio):
+            return self.numer == other.numer and self.denom == other.denom
+        return False
+
+    def __ne__(self, other: object) -> bool:
+        if isinstance(other, Ratio):
+            return self.numer != other.numer and self.denom != other.denom
+        return False
+
+    def __lt__(self, other: object) -> bool:
+        if isinstance(other, Ratio):
+            left_number = self.numer * other.denom
+            right_number = self.denom * other.numer
+            return left_number < right_number
+        return False
+
+    def __le__(self, other: object) -> bool:
+        if isinstance(other, Ratio):
+            left_number = self.numer * other.denom
+            right_number = self.denom * other.numer
+            return left_number <= right_number
+        return False
+
+    def __gt__(self, other: object) -> bool:
+        if isinstance(other, Ratio):
+            left_number = self.numer * other.denom
+            right_number = self.denom * other.numer
+            return left_number > right_number
+        return False
+
+    def __ge__(self, other: object) -> bool:
+        if isinstance(other, Ratio):
+            left_number = self.numer * other.denom
+            right_number = self.denom * other.numer
+            return left_number >= right_number
+        return False
