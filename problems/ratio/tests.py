@@ -1,6 +1,6 @@
 import unittest
 
-from ratio import Ratio
+from ratio import Ratio, CannotDivideByZeroError
 
 class TestRatio(unittest.TestCase):
     '''test class Ratio'''
@@ -61,6 +61,10 @@ class TestRatio(unittest.TestCase):
         ''' not less equal: test __le__ method'''
         self.assertFalse(self.negative_numer <= self.negative_denom)
 
+    def test_2_magic_less_equal(self):
+        '''equal: test __le__ method'''
+        self.assertTrue(self.ratio <= self.equal_to_ratio)
+
     def test_0_magic_greater_than(self):
         ''' is greater than: test __gt__ method'''
         self.assertTrue(self.negative_numer > self.negative_denom)
@@ -76,6 +80,15 @@ class TestRatio(unittest.TestCase):
     def test_1_magic_greater_equal(self):
         ''' not greater equal: test __ge__ method'''
         self.assertFalse(self.ratio >= self.equal_denom)
+
+    def test_2_magic_greater_equal(self):
+        '''equal: test __ge__ method'''
+        self.assertTrue(self.ratio >= self.equal_to_ratio)
+
+    def test_0_magic_invert(self):
+        '''check if the rational number was inverted'''
+        inverted_ratio = ~self.different_denom
+        self.assertEqual(inverted_ratio.to_string(), "7/6")
 
     def test_new_ratio_is_normal(self):
         '''check if newly constructed ratio is normalized'''
@@ -138,10 +151,31 @@ class TestRatio(unittest.TestCase):
         result = a.div(b)
         self.assertEqual(result.to_string(), "-1/1")
 
-    def test_1_to_float(self):
+    def test_0_to_float(self):
         '''convert rational number to float'''
         result = self.ratio.to_float()
         self.assertAlmostEqual(result, -0.4444444444444444)
+
+    def test_0_to_dict(self):
+        '''provide rational in a dict form'''
+        self.assertEqual(self.equal_denom.to_dict(), {"numerator":"5", "denominator":"9"})
+
+    def test_0_from_dict(self):
+        '''convert dict to rational number'''
+        ratio_dict = {"numerator":"5", "denominator":"7"}
+        result = Ratio.from_dict(ratio_dict)
+        self.assertEqual(result, Ratio(5, 7))
+
+    def test_0_denominator_is_zero_error(self):
+        '''checks if the CannotDivideByZeroError is raised when denominator = 0'''
+        ugly_ratio = Ratio(7, 0)
+        self.assertRaises(CannotDivideByZeroError, ugly_ratio)
+    
+    def test_0_div_zero_numerator_error(self):
+        '''checks if the CannotDivideByZeroError is raised when numerator = 0 in division'''
+        zero_numerator = Ratio(0, 6)
+        result = self.ratio.div(zero_numerator)
+        self.assertRaises(CannotDivideByZeroError, result)
 
 if __name__ == '__main__':
     unittest.main()
