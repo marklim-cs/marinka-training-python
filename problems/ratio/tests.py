@@ -9,6 +9,73 @@ class TestRatio(unittest.TestCase):
         self.different_denom = Ratio(numerator=6, denominator=7)
         self.equal_denom = Ratio(numerator=5, denominator=9)
         self.negative_numer = Ratio(numerator=-7, denominator=12)
+        self.negative_denom = Ratio(numerator=8, denominator=-12)
+        self.equal_to_ratio = Ratio(numerator=-4, denominator=9)
+
+    def test_0_magic_add(self):
+        '''different denominators: test __add__ method'''
+        result = self.ratio + (self.different_denom)
+        self.assertEqual(result.to_string(), "26/63")
+    
+    def test_1_magic_add(self):
+        '''negative numerators: test __add__ method'''
+        result = self.ratio + self.equal_denom
+        self.assertEqual(result.to_string(), "1/9")
+
+    def test_0_magic_sub(self):
+        '''different denominators: test __sub__ method'''
+        result = self.ratio - self.different_denom
+        self.assertEqual(result.to_string(), "-82/63")
+
+    def test_0_magic_mul(self):
+        '''negative numerators: test __mul__ method'''
+        result = self.ratio * self.negative_numer
+        self.assertEqual(result.to_string(), "7/27")
+
+    def test_0_magic_div(self):
+        '''negative denominator: test __div__ method'''
+        result = self.ratio // self.negative_denom
+        self.assertEqual(result.to_string(), "2/3")
+
+    def test_0_magic_notequal(self):
+        ''' not equal: test __ne__ method'''
+        self.assertTrue(self.ratio != self.negative_denom)
+
+    def test_1_magic_equal(self):
+        ''' equal: test __eq__ method'''
+        self.assertTrue(self.ratio == self.equal_to_ratio)
+
+    def test_0_magic_less_than(self):
+        ''' is less than: test __lt__ method'''
+        self.assertTrue(self.ratio < self.equal_denom)
+
+    def test_1_magic_less_than(self):
+        ''' not less than: test __lt__ method'''
+        self.assertFalse(self.ratio < self.equal_to_ratio)
+
+    def test_0_magic_less_equal(self):
+        ''' is less equal: test __le__ method'''
+        self.assertTrue(self.ratio <= self.equal_to_ratio)
+
+    def test_1_magic_less_equal(self):
+        ''' not less equal: test __le__ method'''
+        self.assertFalse(self.negative_numer <= self.negative_denom)
+
+    def test_0_magic_greater_than(self):
+        ''' is greater than: test __gt__ method'''
+        self.assertTrue(self.negative_numer > self.negative_denom)
+
+    def test_1_magic_greater_than(self):
+        ''' not greater than: test __gt__ method'''
+        self.assertFalse(self.ratio > self.different_denom)
+
+    def test_0_magic_greater_equal(self):
+        ''' is greater equal: test __ge__ method'''
+        self.assertTrue(self.ratio >= self.equal_to_ratio)
+
+    def test_1_magic_greater_equal(self):
+        ''' not greater equal: test __ge__ method'''
+        self.assertFalse(self.ratio >= self.equal_denom)
 
     def test_new_ratio_is_normal(self):
         '''check if newly constructed ratio is normalized'''
