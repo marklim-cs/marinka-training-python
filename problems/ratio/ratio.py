@@ -20,7 +20,7 @@ class Ratio:
     ''' represents a rational number '''
     def __init__(self, numerator: int, denominator: int):
         if denominator == 0:
-            raise ZeroDivisionError()
+            raise DividingByZeroError()
 
         self.numer = numerator
         self.denom = denominator
