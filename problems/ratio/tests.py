@@ -1,6 +1,6 @@
 import unittest
 
-from ratio import Ratio, CannotDivideByZeroError
+from ratio import Ratio, DividingByZeroError
 
 class TestRatio(unittest.TestCase):
     '''test class Ratio'''
@@ -167,15 +167,15 @@ class TestRatio(unittest.TestCase):
         self.assertEqual(result, Ratio(5, 7))
 
     def test_0_denominator_is_zero_error(self):
-        '''checks if the CannotDivideByZeroError is raised when denominator = 0'''
+        '''checks if the DividingByZeroError is raised when denominator = 0'''
         ugly_ratio = Ratio(7, 0)
-        self.assertRaises(CannotDivideByZeroError, ugly_ratio)
+        self.assertRaises(DividingByZeroError, ugly_ratio)
     
     def test_0_div_zero_numerator_error(self):
-        '''checks if the CannotDivideByZeroError is raised when numerator = 0 in division'''
+        '''checks if the DividingByZeroError is raised when numerator = 0 in division'''
         zero_numerator = Ratio(0, 6)
         result = self.ratio.div(zero_numerator)
-        self.assertRaises(CannotDivideByZeroError, result)
+        self.assertRaises(DividingByZeroError, result)
 
 if __name__ == '__main__':
     unittest.main()

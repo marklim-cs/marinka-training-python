@@ -20,14 +20,14 @@ class Ratio:
     ''' represents a rational number '''
     def __init__(self, numerator: int, denominator: int):
         if denominator == 0:
-            raise CannotDivideByZeroError()
+            raise ZeroDivisionError()
 
         self.numer = numerator
         self.denom = denominator
         self.normalize()
 
     def __str__(self):
-        return f"The rational number is equal to {self.numer}/{self.denom}"
+        return f"{self.numer}/{self.denom}"
 
     def __repr__(self):
         return f"Ratio(numerator={self.numer}, denominator={self.denom})"
@@ -58,8 +58,8 @@ class Ratio:
     def div(self, other: 'Ratio') -> 'Ratio':
         ''' divide the rational numbers '''
 
-        if self.numer == 0 or other.numer == 0:
-            raise CannotDivideByZeroError()
+        if other.numer == 0:
+            raise DividingByZeroError()
 
         divided_numer = self.numer * other.denom
         divided_denom = self.denom * other.numer
@@ -94,7 +94,7 @@ class Ratio:
         return dict_ratio
     
     @staticmethod
-    def from_dict(data: dict):
+    def from_dict(data: dict) -> 'Ratio':
         '''convert dict to a Ratio instance'''
         numerator = int(data["numerator"])
         denominator = int(data["denominator"])
@@ -152,19 +152,12 @@ class Ratio:
     
     def __invert__(self) -> 'Ratio':
         if self.numer == 0:
-            raise CannotDivideByZeroError()
+            raise DividingByZeroError()
         
-        inverted_numerator = self.denom
-        inverted_denominator = self.numer
-        return Ratio(inverted_numerator, inverted_denominator)
-    
-if __name__ == '__main__':
-    x = {"numerator":"5", "denominator":"7"}
-    print(Ratio.from_dict(x))
+        return Ratio(self.denom, self.numer)
 
-
-class CannotDivideByZeroError(Exception):
+class DividingByZeroError(Exception):
     "Raised when a number divided by zero"
 
-    def __init__(self, message="Operation unexecutable: the denominator is equal to zero"):
+    def __init__(self, message="Cannot divide by zero"):
         super().__init__(message)
