@@ -20,11 +20,17 @@ class Ratio:
     ''' represents a rational number '''
     def __init__(self, numerator: int, denominator: int):
         if denominator == 0:
-            raise ValueError("Denominator cannot be 0")
+            raise DividingByZeroError()
 
         self.numer = numerator
         self.denom = denominator
         self.normalize()
+
+    def __str__(self):
+        return f"{self.numer}/{self.denom}"
+
+    def __repr__(self):
+        return f"Ratio(numerator={self.numer}, denominator={self.denom})"
 
     def add(self, other: 'Ratio') -> 'Ratio':
         ''' add the rational numbers '''
@@ -52,6 +58,9 @@ class Ratio:
     def div(self, other: 'Ratio') -> 'Ratio':
         ''' divide the rational numbers '''
 
+        if other.numer == 0:
+            raise DividingByZeroError()
+
         divided_numer = self.numer * other.denom
         divided_denom = self.denom * other.numer
 
@@ -72,13 +81,25 @@ class Ratio:
             self.denom = -self.denom
 
     def to_float(self) -> float:
-        ''' convert the rational number to float '''
+        '''convert the rational number to a float'''
         return self.numer/self.denom
 
     def to_string(self) -> str:
-        ''' convert the rational number to string '''
+        '''convert the rational number to a string'''
         return f"{self.numer}/{self.denom}"
     
+    def to_dict(self) -> dict:
+        '''convert the rational number to dict'''
+        dict_ratio = {"numerator":f"{self.numer}", "denominator":f"{self.denom}"}
+        return dict_ratio
+    
+    @staticmethod
+    def from_dict(data: dict) -> 'Ratio':
+        '''convert dict to a Ratio instance'''
+        numerator = int(data["numerator"])
+        denominator = int(data["denominator"])
+        return Ratio(numerator, denominator)
+
     def __add__(self, other: 'Ratio') -> 'Ratio':
         return self.add(other)
 
@@ -128,3 +149,15 @@ class Ratio:
             right_number = self.denom * other.numer
             return left_number >= right_number
         return False
+    
+    def __invert__(self) -> 'Ratio':
+        if self.numer == 0:
+            raise DividingByZeroError()
+        
+        return Ratio(self.denom, self.numer)
+
+class DividingByZeroError(Exception):
+    "Raised when a number divided by zero"
+
+    def __init__(self, message="Cannot divide by zero"):
+        super().__init__(message)
