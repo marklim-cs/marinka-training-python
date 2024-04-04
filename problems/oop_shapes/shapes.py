@@ -104,7 +104,7 @@ class Line(Shape):
     def area(self):
         return 0.0
 
-    def center(self):
+    def center(self) -> tuple:
         return (self.b-self.a)/2
 
     def name(self):
