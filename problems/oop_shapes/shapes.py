@@ -36,7 +36,7 @@ class Circle(Shape):
     def center(self) -> tuple:
         return self.circle_center
 
-    def name(self):
+    def name(self) -> str:
         return "Circle"
 
     def __str__(self):
