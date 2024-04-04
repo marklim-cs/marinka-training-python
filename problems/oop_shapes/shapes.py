@@ -102,7 +102,7 @@ class Line(Shape):
         self.b = endpoint_b
 
     def area(self):
-        return 0
+        return 0.0
 
     def center(self):
         return (self.b-self.a)/2
