@@ -89,7 +89,7 @@ class Rectangle(Shape):
     def center(self):
         return (self.height/2, self.width/2)
 
-    def name(self):
+    def name(self) -> str:
         return "Rectangle"
 
     def __str__(self):
