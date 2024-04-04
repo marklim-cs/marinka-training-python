@@ -111,4 +111,4 @@ class Line(Shape):
         return "Line"
 
     def __str__(self):
-        return super().__str__() + f", endpoints a and b: {self.a}, {self.b}"
+        return f"{self.name()}({self.a}, {self.b})"
