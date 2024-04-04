@@ -55,7 +55,7 @@ class Triangle(Shape):
         y = (self.a[1] + self.b[1] + self.c[1]) / 3
         return x, y
 
-    def sides_length(self):
+    def sides(self):
         '''Calculate the lengths of the sides of a triangle given its vertices.'''
         a = distance(self.a, self.b)
         b = distance(self.b, self.c)
