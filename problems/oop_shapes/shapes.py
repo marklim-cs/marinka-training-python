@@ -83,7 +83,7 @@ class Rectangle(Shape):
         self.width = width
         self.height = height
 
-    def area(self):
+    def area(self) -> float:
         return self.width * self.height
 
     def center(self) -> tuple:
