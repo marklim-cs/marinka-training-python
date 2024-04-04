@@ -64,7 +64,7 @@ class Triangle(Shape):
 
     def triabngle_area(self):
         '''Calculate the area of the triangle using Heron's formula.'''
-        a, b, c = self.sides_length()
+        a, b, c = self.sides()
         s = (a + b + c) / 2
         triangle_area = math.sqrt(s * (s - a) * (s - b) * (s - c))
         return triangle_area
