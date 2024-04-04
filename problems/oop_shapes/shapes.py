@@ -69,7 +69,7 @@ class Triangle(Shape):
         triangle_area = math.sqrt(s * (s - a) * (s - b) * (s - c))
         return triangle_area
 
-    def name(self):
+    def name(self) -> str:
         return "Triangle"
 
     def __str__(self):
