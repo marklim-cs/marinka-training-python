@@ -9,7 +9,7 @@ def distance(point1: tuple, point2: tuple):
 
 class Shape:
     '''superclass'''
-    def name(self):
+    def name(self) -> str:
         '''shape's name'''
         raise NotImplementedError()
     
