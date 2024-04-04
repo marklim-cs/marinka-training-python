@@ -101,7 +101,7 @@ class Line(Shape):
         self.a = endpoint_a
         self.b = endpoint_b
 
-    def area(self):
+    def area(self) -> float:
         return 0.0
 
     def center(self) -> tuple:
