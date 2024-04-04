@@ -73,7 +73,7 @@ class Triangle(Shape):
         return "Triangle"
 
     def __str__(self):
-        return f"name: {self.name()}, center: {self.center()}, area: {self.triabngle_area()}, vertices a, b, c: {self.a}, {self.b}, {self.c}"
+        return f"{self.name()}({self.a}, {self.b}, {self.c})"
 
 class Rectangle(Shape):
     '''define Rectangle subclass'''
