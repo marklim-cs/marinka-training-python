@@ -93,7 +93,7 @@ class Rectangle(Shape):
         return "Rectangle"
 
     def __str__(self):
-        return super().__str__() + f", height and width: {self.height}, {self.width}"
+        return f"{self.name()}(top={self.top}, left={self.left}, width={self.width}, height={self.height})"
 
 class Line(Shape):
     '''define Line subclass'''
