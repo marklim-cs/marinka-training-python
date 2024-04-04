@@ -40,7 +40,7 @@ class Circle(Shape):
         return "Circle"
 
     def __str__(self):
-        return super().__str__() + f", radius={self.radius}"
+        return f"{self.name()}(center={self.circle_center), radius={self.radius}"
 
 class Triangle(Shape):
     '''define Triangle subclass'''
