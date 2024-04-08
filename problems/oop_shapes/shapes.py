@@ -22,25 +22,25 @@ class Shape:
         raise NotImplementedError()
 
     def __str__(self):
-        return f"name: {self.name()}, center: {self.center()}, area: {self.area()}"
+        raise NotImplementedError()
 
 class Circle(Shape):
     '''define Circle subclass'''
     def __init__(self, radius: float, circle_center: tuple):
         self.radius = radius
-        self.circle_center = circle_center
+        self._center = circle_center
 
     def area(self) -> float:
-        return 3.14 * self.radius**2
+        return math.pi * self.radius**2
 
     def center(self) -> tuple:
-        return self.circle_center
+        return self._center
 
     def name(self) -> str:
         return "Circle"
 
     def __str__(self):
-        return f"{self.name()}(center={self.circle_center), radius={self.radius}"
+        return f"{self.name()}(center={self._center}, radius={self.radius}"
 
 class Triangle(Shape):
     '''define Triangle subclass'''
@@ -62,7 +62,7 @@ class Triangle(Shape):
         c = distance(self.c, self.a)
         return a, b, c
 
-    def triabngle_area(self):
+    def area(self) -> float:
         '''Calculate the area of the triangle using Heron's formula.'''
         a, b, c = self.sides()
         s = (a + b + c) / 2
@@ -78,8 +78,8 @@ class Triangle(Shape):
 class Rectangle(Shape):
     '''define Rectangle subclass'''
     def __init__(self, top: int, left: int, width: int, height: int):
-        self.top = top
         self.left = left
+        self.top = top
         self.width = width
         self.height = height
 
@@ -97,7 +97,7 @@ class Rectangle(Shape):
 
 class Line(Shape):
     '''define Line subclass'''
-    def __init__(self, endpoint_a: int, endpoint_b: int):
+    def __init__(self, endpoint_a: tuple, endpoint_b: tuple):
         self.a = endpoint_a
         self.b = endpoint_b
 
@@ -105,7 +105,9 @@ class Line(Shape):
         return 0.0
 
     def center(self) -> tuple:
-        return (self.b-self.a)/2
+        x = (self.a[0] + self.b[0]) / 2
+        y = (self.b[1] + self.b[1]) / 2
+        return (x, y)
 
     def name(self) -> str:
         return "Line"
