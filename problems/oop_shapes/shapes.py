@@ -148,6 +148,8 @@ class Line(Shape):
     def __str__(self):
         return f"{self.name()}({self.a}, {self.b})"
 
+
+
 master = Tk()
 CANVAS_WIDTH = 400
 CANVAS_HEIGHT = 300
