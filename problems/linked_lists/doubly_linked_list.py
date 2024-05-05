@@ -94,8 +94,9 @@ class DoublyLinkedList:
         if self.head is None:
             return None
         if self.head.next is None:
+            pop_element = self.head.data
             self.head = None
-            return None
+            return pop_element
 
         pop_element = self.head.data
         self.head = self.head.next
@@ -110,8 +111,9 @@ class DoublyLinkedList:
         if self.head is None:
             return None
         if self.head.next is None:
+            pop_element = self.head.data
             self.head = None
-            return None
+            return pop_element
 
         previous_node = self.head
         current_node = self.head.next
@@ -132,8 +134,9 @@ class DoublyLinkedList:
         if self.head is None:
             return None
         if self.head.next is None:
+            pop_element = self.head
             self.head = None
-            return None
+            return pop_element
 
         previous_node = self.head
         current_node = self.head.next

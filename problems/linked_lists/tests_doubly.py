@@ -44,7 +44,7 @@ class TestDoublyLinkedList(unittest.TestCase):
         dll.pop_front()
         self.assertEqual(dll.to_list(), [10, 20])
         self.assertEqual(dll.pop_front(), 10)
-        self.assertEqual(dll.pop_front(), None)
+        self.assertEqual(dll.pop_front(), 20)
 
     def test_pop_back(self):
         "checks if an element is deleted at the end"
@@ -55,6 +55,7 @@ class TestDoublyLinkedList(unittest.TestCase):
         self.assertEqual(dll.pop_back(), 20)
         dll.pop_back()
         self.assertEqual(dll.to_list(), [5])
+        self.assertEqual(dll.pop_back(), 5)
         self.assertEqual(dll.pop_back(), None)
 
     def test_remove(self):
@@ -67,6 +68,8 @@ class TestDoublyLinkedList(unittest.TestCase):
         self.assertEqual(dll.remove(1), 10)
         with self.assertRaises(IndexError):
             dll.remove(10)
+        with self.assertRaises(IndexError):
+            dll.remove(-10)
         dll.remove(0)
         self.assertEqual(dll.to_list(), [20])
 
