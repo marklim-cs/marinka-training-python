@@ -30,8 +30,9 @@ class SinglyLinkedList():
         if self.head is None:
             return None
         if self.head.next is None:
+            pop_element = self.head.data
             self.head = None
-            return None
+            return pop_element
 
         previous_node = self.head
         current_node = self.head.next
@@ -39,9 +40,9 @@ class SinglyLinkedList():
         while current_node.next is not None:
             current_node = current_node.next
             previous_node = previous_node.next
-        pop_elemend = current_node.data
+        pop_element = current_node.data
         previous_node.next = None
-        return pop_elemend
+        return pop_element
 
     def to_list(self) -> list:
         '''converts a linked list to regular Python list'''
