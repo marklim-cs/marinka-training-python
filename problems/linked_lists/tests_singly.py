@@ -22,12 +22,11 @@ class TestSinglyLinkedList(unittest.TestCase):
         ll.push(5)
         ll.push(10)
         ll.push(15)
-        ll.pop()
+        self.assertEqual(ll.pop(), 15)
         self.assertEqual(ll.to_list(), [5, 10])
         ll.pop()
         self.assertEqual(ll.to_list(), [5])
-        ll.pop()
-        self.assertEqual(ll.to_list(), [])
+        self.assertEqual(ll.pop(), None)
 
     def test_len(self):
         ll = SinglyLinkedList()

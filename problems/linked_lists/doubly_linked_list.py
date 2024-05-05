@@ -5,23 +5,28 @@ class Node:
         self.data = data
         self.next = None
 
-class Doubly_linked_list:
+class DoublyLinkedList:
     def __init__(self):
         self.head = None
 
-    def len(self):
-        '''returns the length of the linked list'''
+    def len(self) -> int:
+        '''
+        returns the length of the linked list
+        '''
         length = 0
         if self.head is None:
             return length
-        else:
-            current_node = self.head
-            while current_node is not None:
-                length += 1
-                current_node = current_node.next
-            return length
+
+        current_node = self.head
+        while current_node is not None:
+            length += 1
+            current_node = current_node.next
+        return length
 
     def backward_traversal(self):
+        '''
+        traverses throught the list starting from the last element of the doubly linked list
+        '''
         node = self.head
         if node is None:
             return None
@@ -35,13 +40,23 @@ class Doubly_linked_list:
                 node = node.prev
             return make_list
 
-    def push_at_beginning(self, data):
+    def push_front(self, data):
+        '''
+        ads an element at the beginning of a doubly linked list
+        '''
         ns = Node(data)
+        if self.head is None:
+            self.head = ns
+            return
+
         ns.next = self.head
         self.head.prev = ns
         self.head = ns
 
-    def push_at_end(self, data):
+    def push_back(self, data):
+        '''
+        ads an element at the end of a doubly linked list
+        '''
         ne = Node(data)
         if self.head is None:
             self.head = ne
@@ -53,7 +68,10 @@ class Doubly_linked_list:
         node.next = ne
         ne.prev = node
 
-    def push_at_position(self, data, position):
+    def insert(self, data, position):
+        '''
+        ads an element at the specified position of a doubly linked list
+        '''
         ns = Node(data)
         if self.head is None:
             self.head = ns
@@ -68,7 +86,27 @@ class Doubly_linked_list:
         node.next.prev = ns
         node.next = ns
 
-    def pop_at_end(self):
+    def pop_front(self):
+        '''
+        removes an element at the beginning of the doubly linked list and returns its value,
+        returns None if the list is empty or contained only one element
+        '''
+        if self.head is None:
+            return None
+        if self.head.next is None:
+            self.head = None
+            return None
+
+        pop_element = self.head.data
+        self.head = self.head.next
+        self.head.prev = None
+        return pop_element
+
+    def pop_back(self):
+        '''
+        removes an element at the end of the doubly linked list and returns its value,
+        returns None if the list is empty or contained only one element
+        '''
         if self.head is None:
             return None
         if self.head.next is None:
@@ -81,10 +119,16 @@ class Doubly_linked_list:
         while current_node.next is not None:
             current_node = current_node.next
             previous_node = previous_node.next
+        pop_element = current_node.data
         current_node.prev = None
         previous_node.next = None
+        return pop_element
 
-    def pop_at_position(self, position):
+    def remove(self, position):
+        '''
+        removes an element at the specified position of a doubly linked list and returns its value,
+        returns None if the list is empty
+        '''
         if self.head is None:
             return None
         if self.head.next is None:
@@ -106,12 +150,18 @@ class Doubly_linked_list:
         for _ in range(1, position):
             previous_node = current_node
             current_node = current_node.next
+        pop_element = current_node.data
 
         previous_node.next = current_node.next
         if current_node.next is not None:
             current_node.next.prev = previous_node
 
-    def to_list(self):
+        return pop_element
+
+    def to_list(self) -> list:
+        '''
+        converts a linked list to regular Python list
+        '''
         if self.head is None:
             return []
 

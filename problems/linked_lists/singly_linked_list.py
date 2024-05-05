@@ -23,7 +23,10 @@ class SinglyLinkedList():
         current_node.next = new_node
 
     def pop(self):
-        '''removes the last element frome the linked list and returns the value of it'''
+        '''
+        removes the last element frome the linked list and returns the value of it
+        and returns None if the list is empty or contained only one element
+        '''
         if self.head is None:
             return None
         if self.head.next is None:
@@ -36,9 +39,11 @@ class SinglyLinkedList():
         while current_node.next is not None:
             current_node = current_node.next
             previous_node = previous_node.next
+        pop_elemend = current_node.data
         previous_node.next = None
+        return pop_elemend
 
-    def to_list(self):
+    def to_list(self) -> list:
         '''converts a linked list to regular Python list'''
         if self.head is None:
             return []
@@ -50,14 +55,13 @@ class SinglyLinkedList():
             current_node = current_node.next
         return to_list
 
-    def len(self):
+    def len(self) -> int:
         '''returns the length of the linked list'''
         length = 0
         if self.head is None:
             return length
-        else:
-            current_node = self.head
-            while current_node is not None:
-                length += 1
-                current_node = current_node.next
-            return length
+        current_node = self.head
+        while current_node is not None:
+            length += 1
+            current_node = current_node.next
+        return length
