@@ -1,4 +1,7 @@
-'''Data structures: linked lists'''
+'''
+Data structures: singly linked lists
++ bubble sort
+'''
 class Node:
     '''a Node class for linked lists '''
     def __init__(self, data):
@@ -24,7 +27,7 @@ class SinglyLinkedList():
 
     def pop(self):
         '''
-        removes the last element frome the linked list and returns the value of it
+        removes the last element from the linked list and returns the value of it
         and returns None if the list is empty or contained only one element
         '''
         if self.head is None:
@@ -56,7 +59,7 @@ class SinglyLinkedList():
             current_node = current_node.next
         return to_list
 
-    def len(self) -> int:
+    def __len__(self) -> int:
         '''returns the length of the linked list'''
         length = 0
         if self.head is None:
@@ -66,3 +69,26 @@ class SinglyLinkedList():
             length += 1
             current_node = current_node.next
         return length
+
+    def sort(self):
+        '''
+        Bubble sort in ascending order, 
+        returns None if the list is empty
+        '''
+        if self.head is None:
+            return None
+
+        swapped = True
+        while swapped:
+            swapped = False
+            current_node = self.head
+
+            while current_node.next is not None:
+                if current_node.data > current_node.next.data:
+                    temp = current_node.data
+                    current_node.data = current_node.next.data
+                    current_node.next.data = temp
+                    swapped = True
+                current_node = current_node.next
+
+        return self.to_list()

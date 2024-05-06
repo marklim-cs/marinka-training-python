@@ -1,4 +1,7 @@
-
+'''
+Data structures: doubly linked lists
++ bubble sort
+'''
 class Node:
     def __init__(self, data):
         self.prev = None
@@ -9,7 +12,7 @@ class DoublyLinkedList:
     def __init__(self):
         self.head = None
 
-    def len(self) -> int:
+    def __len__(self) -> int:
         '''
         returns the length of the linked list
         '''
@@ -23,22 +26,23 @@ class DoublyLinkedList:
             current_node = current_node.next
         return length
 
-    def backward_traversal(self):
+    def to_list_reverse(self) -> list:
         '''
         traverses throught the list starting from the last element of the doubly linked list
         '''
         node = self.head
-        if node is None:
-            return None
 
-        else:
-            make_list = []
-            while node.next is not None:
-                node = node.next
-            while node is not None:
-                make_list.append(node.data)
-                node = node.prev
-            return make_list
+        if node is None:
+            return []
+
+        make_list = []
+        while node.next is not None:
+            node = node.next
+        while node is not None:
+            make_list.append(node.data)
+            node = node.prev
+
+        return make_list
 
     def push_front(self, data):
         '''
@@ -131,6 +135,9 @@ class DoublyLinkedList:
         removes an element at the specified position of a doubly linked list and returns its value,
         returns None if the list is empty
         '''
+        if position < 0 or position >= self.__len__():
+            raise IndexError(f"Position out of range, list's length is {self.__len__()}")
+
         if self.head is None:
             return None
         if self.head.next is None:
@@ -141,14 +148,12 @@ class DoublyLinkedList:
         previous_node = self.head
         current_node = self.head.next
 
-        if position < 0 or position >= self.len():
-            raise IndexError(f"Position out of range, list's length is {self.len()}")
-
         if position == 0:
+            pop_element = self.head.data
             self.head = self.head.next
             if self.head is not None:
                 self.head.prev = None
-            return
+            return pop_element
 
         for _ in range(1, position):
             previous_node = current_node
