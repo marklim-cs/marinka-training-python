@@ -19,13 +19,6 @@ class TestQueue(unittest.TestCase):
         q.enqueue(0)
         self.assertEqual(q.enqueue(100), [5, 3, 6, 0, 100])
         self.assertEqual(q.dequeue_number_of_elements(2), [6, 0, 100])
-    def test_sort_queue(self):
-        q = Queue()
-        q.enqueue(5)
-        q.enqueue(3)
-        q.enqueue(6)
-        q.enqueue(0)
-        self.assertEqual(q.enqueue(100), [5, 3, 6, 0, 100])
 
 if __name__ == '__main__':
     unittest.main()
