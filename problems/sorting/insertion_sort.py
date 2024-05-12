@@ -6,6 +6,6 @@ def insertion_sort(arr: list):
 
         while previous_index >=0 and key < arr[previous_index]:
             arr[previous_index+1] = arr[previous_index]
-            previous_index = previous_index - 1
+            previous_index -= 1
 
         arr[previous_index+1] = key
