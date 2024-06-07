@@ -1,6 +1,6 @@
 '''test SelectionSort'''
 import unittest
-from selection_sort import selection_sort
+from .selection_sort import selection_sort
 
 class TestSelectionSort(unittest.TestCase):
     def test_sort(self):

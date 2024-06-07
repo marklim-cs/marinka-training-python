@@ -3,14 +3,10 @@ def selection_sort(arr: list):
         min_idx = i
         for j, other_value in enumerate(arr[i+1:], i + 1):
             if other_value < arr[min_idx]:
-                print("minimum index =",arr[min_idx], "other_value =", other_value)
                 min_idx = j
         temp = value
         arr[i] = arr[min_idx]
         arr[min_idx] = temp
-        print(arr)
-
-selection_sort([8, -10, 7, 55, 45, 3, -100, 0, 0])
 
 
 def selection_sort2(arr: list):
