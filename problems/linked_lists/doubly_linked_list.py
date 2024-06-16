@@ -11,6 +11,7 @@ class Node:
 class DoublyLinkedList:
     def __init__(self):
         self.head = None
+        self.tail = None
 
     def __len__(self) -> int:
         '''
@@ -51,6 +52,7 @@ class DoublyLinkedList:
         ns = Node(data)
         if self.head is None:
             self.head = ns
+            self.tail = ns
             return
 
         ns.next = self.head

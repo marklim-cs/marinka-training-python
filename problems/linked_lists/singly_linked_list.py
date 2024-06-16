@@ -11,19 +11,18 @@ class Node:
 class SinglyLinkedList():
     def __init__(self):
         self.head = None
+        self.tail = None
 
     def push(self, data):
         '''adds an element to the last positions of the linked list'''
         new_node = Node(data)
         if self.head is None:
             self.head = new_node
+            self.tail = new_node
             return
 
-        current_node = self.head
-        while current_node.next:
-            current_node = current_node.next
-
-        current_node.next = new_node
+        self.tail.next = new_node
+        self.tail = self.tail.next
 
     def pop(self):
         '''
@@ -32,20 +31,30 @@ class SinglyLinkedList():
         '''
         if self.head is None:
             return None
-        if self.head.next is None:
+
+        if self.head is self.tail:
             pop_element = self.head.data
             self.head = None
+            self.tail = None
             return pop_element
 
-        previous_node = self.head
-        current_node = self.head.next
-
-        while current_node.next is not None:
+        current_node = self.head
+        while current_node.next is not self.tail:
             current_node = current_node.next
-            previous_node = previous_node.next
-        pop_element = current_node.data
-        previous_node.next = None
+        pop_element = self.tail.data
+        self.tail = current_node
+        self.tail.next = None
         return pop_element
+
+        #previous_node = self.head
+        #current_node = self.head.next
+
+        #while current_node.next is not None:
+            #current_node = current_node.next
+            #previous_node = previous_node.next
+        #pop_element = current_node.data
+        #previous_node.next = None
+        #return pop_element
 
     def to_list(self) -> list:
         '''converts a linked list to regular Python list'''
@@ -90,5 +99,6 @@ class SinglyLinkedList():
                     current_node.next.data = temp
                     swapped = True
                 current_node = current_node.next
+            self.tail = current_node
 
         return self.to_list()

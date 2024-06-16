@@ -41,6 +41,7 @@ class TestSinglyLinkedList(unittest.TestCase):
         self.assertEqual(len(ll), 3)
         ll.pop()
         ll.pop()
+        self.assertEqual(len(ll), 1)
         ll.pop()
         self.assertEqual(len(ll), 0)
 
@@ -60,8 +61,8 @@ class TestSinglyLinkedList(unittest.TestCase):
         self.assertEqual(ll.sort(), [-5, 0, 5, 10, 13, 20, 55])
         ll.pop()
         self.assertEqual(ll.sort(), [-5, 0, 5, 10, 13, 20])
-        ll.push(33)
-        self.assertEqual(ll.sort(), [-5, 0, 5, 10, 13, 20, 33])
+        ll.push(40)
+        self.assertEqual(ll.to_list(), [-5, 0, 5, 10, 13, 20, 40])
 
 if __name__ == '__main__':
     unittest.main()
