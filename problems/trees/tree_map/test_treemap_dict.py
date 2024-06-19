@@ -1,5 +1,5 @@
 import unittest
-from .tree_map import TreeMap
+from .tree_map_dict import TreeMap
 
 class TestTreeMap(unittest.TestCase):
     def test_insert(self):
