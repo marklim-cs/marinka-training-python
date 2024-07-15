@@ -52,8 +52,8 @@ class TreeMap:
         return node
 
     def find(self, key: int|str) -> object | None:
-        founded_value = self._find_recursively(self._root, key)
-        return founded_value
+        found_value = self._find_recursively(self._root, key)
+        return found_value
 
     def _find_recursively(self, node, key):
         if node is None:
@@ -80,6 +80,17 @@ class TreeMap:
         count += self._len_recursively(node.leftchild)
         count += self._len_recursively(node.rightchild)
         return count
+
+    def __iter__(self):
+        pass
+
+    def _iter_recursively(self, node):
+        if node is None:
+            return
+
+        self._iter_recursively(node.leftchild)
+        yield (node.key, node.value)
+        self._iter_recursively(node.rightchild)
 
 class PythonDict:
     def __init__(self, dictionary: dict):
