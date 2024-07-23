@@ -26,9 +26,9 @@ ArrayMap should use one or more python list fields to store data
 '''
 
 class Node:
-    def __init__(self):
-        self.key = None
-        self.value = None
+    def __init__(self, key, value):
+        self.key = key or None
+        self.value = value or None
         self.leftchild = None
         self.rightchild = None
 
@@ -41,7 +41,8 @@ class TreeMap:
 
     def _insert_recursively(self, node, key, value):
         if node is None:
-            return node(key, value)
+            node = Node(key, value)
+            return node
 
         if key < node.key:
             self._insert_recursively(node.leftchild, key, value)
@@ -93,37 +94,41 @@ class TreeMap:
         self._iter_recursively(node.rightchild)
 
 class PythonDict:
-    def __init__(self, dictionary: dict):
-        self.dict = dictionary
+    def __init__(self):
+        self.dict = {}
 
     def insert(self, key, value):
-        self.dict[key] = [value]
+        self.dict[key] = value
 
     def find(self, key):
-        return self.dict[key]
+        return self.dict.get(key)
 
 class ArrayMap:
     def __init__(self):
-        self.arr = []
+        self.keys = []
+        self.values = []
+
 
     def insert(self, key: int|str, value):
-        pair = (key, value)
-
-        for index, tupple in enumerate(self.arr):
-            if pair[0] == tupple[0]:
-                self.arr[index] = pair
-                return
-        self.arr.append(pair)
+        if key in self.keys:
+            index = self.keys.index(key)
+            self.values[index] = value
+        else:
+            self.keys.append(key)
+            self.values.append(value)
 
     def find(self, key) -> object | None:
-        for tupple in self.arr:
-            if tupple[0] == key:
-                return tupple
+        if key in self.keys:
+            index = self.keys.index(key)
+            return self.values[index]
         return None
 
     def __len__(self) -> int:
-        return len(self.arr)
+        if len(self.keys) == len(self.values):
+            return len(self.keys)
+        else:
+            raise ValueError("size doesn't match, the ArrayMap is not build properly")
 
     def repres(self):
         'for tests'
-        return self.arr
+        return self.keys, self.values
