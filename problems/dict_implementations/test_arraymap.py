@@ -1,5 +1,5 @@
 import unittest
-from .compare_dicts import ArrayMap
+from .cli import ArrayMap
 
 class TestArrayMap(unittest.TestCase):
     def test_insert(self):
@@ -8,9 +8,9 @@ class TestArrayMap(unittest.TestCase):
         arr.insert("banana", 2)
         arr.insert("kiwi", 3)
         arr.insert("banana", 3)
-        self.assertEqual(arr.repres(), (["apple", "banana", "kiwi"], [1, 3, 3]))
+        self.assertEqual(arr.repres(), 'apple : 1\nbanana : 3\nkiwi : 3')
         arr.insert("apple", 10)
-        self.assertEqual(arr.repres(), (["apple", "banana", "kiwi"], [10, 3, 3]))
+        self.assertEqual(arr.repres(), 'apple : 10\nbanana : 3\nkiwi : 3')
 
     def test_find(self):
         arr = ArrayMap()

@@ -3,6 +3,20 @@ import timeit
 from pathlib import Path
 from typing import Callable
 import abc
+import json
+
+class Dictionary(abc.ABC):
+    @abc.abstractmethod
+    def insert(self, key, value):
+        pass
+
+    @abc.abstractmethod
+    def find(self, key) -> object:
+        pass
+
+    @abc.abstractmethod
+    def repres(self) -> str:
+        pass
 
 class Node:
     def __init__(self, key, value):
@@ -11,7 +25,7 @@ class Node:
         self.leftchild = None
         self.rightchild = None
 
-class TreeMap:
+class TreeMap(Dictionary):
     def __init__(self):
         self._root = None
 
@@ -24,9 +38,9 @@ class TreeMap:
             return node
 
         if key < node.key:
-            self._insert_recursively(node.leftchild, key, value)
+            node.leftchild = self._insert_recursively(node.leftchild, key, value)
         elif key > node.key:
-            self._insert_recursively(node.rightchild, key, value)
+            node.rightchild = self._insert_recursively(node.rightchild, key, value)
         else:
             node.value = value
         return node
@@ -40,9 +54,9 @@ class TreeMap:
             return None
 
         if key < node.key:
-            self._find_recursively(node.leftchild, key)
+            return self._find_recursively(node.leftchild, key)
         elif key > node.key:
-            self._find_recursively(node.rightchild, key)
+            return self._find_recursively(node.rightchild, key)
         elif key == node.key:
             return node.value
         else:
@@ -61,18 +75,24 @@ class TreeMap:
         count += self._len_recursively(node.rightchild)
         return count
 
-    def __iter__(self):
-        pass
+    def repres(self):
+        tree = self._iter_recursively(self._root)
+        list_tree = list(tree)
+        return json.dumps(list_tree, indent=2)
 
     def _iter_recursively(self, node):
         if node is None:
             return
 
-        self._iter_recursively(node.leftchild)
-        yield (node.key, node.value)
-        self._iter_recursively(node.rightchild)
+        if node.leftchild is not None:
+            yield from self._iter_recursively(node.leftchild)
 
-class PythonDict:
+        yield (node.key, node.value)
+
+        if node.rightchild is not None:
+            yield from self._iter_recursively(node.rightchild)
+
+class PythonDict(Dictionary):
     def __init__(self):
         self.dict = {}
 
@@ -82,13 +102,16 @@ class PythonDict:
     def find(self, key):
         return self.dict.get(key)
 
-class ArrayMap:
+    def repres(self):
+        return json.dumps(self.dict, indent=2)
+
+class ArrayMap(Dictionary):
     def __init__(self):
         self.keys = []
         self.values = []
 
 
-    def insert(self, key: int|str, value):
+    def insert(self, key, value):
         if key in self.keys:
             index = self.keys.index(key)
             self.values[index] = value
@@ -109,59 +132,63 @@ class ArrayMap:
             raise ValueError("size doesn't match, the ArrayMap is not build properly")
 
     def repres(self):
-        'for tests'
-        return self.keys, self.values
-
-class Dictionary:
-    @abc.abstractmethod
-    def insert(self, key, value):
-        pass
-
-    @abc.abstractmethod
-    def find(self, key) -> object:
-        pass
+        result = "\n".join(f"{key} : {value}" for key, value in zip(self.keys, self.values))
+        return result
 
 def create_storage(storage_type):
-    if storage_type == "Tree":
+    if storage_type == "tree":
         return TreeMap
-    elif storage_type == "Array":
+    elif storage_type == "array":
         return ArrayMap
-    elif storage_type == "Dict":
+    elif storage_type == "dict":
         return PythonDict
     else:
         raise ValueError(f"Unknown storage type: {storage_type}")
 
-def count_words(path, storage_factory: Callable[[], Dictionary]):
-    with open(path, "r", encoding="utf-8") as f:
+def count_words(storage_factory: Callable[[], Dictionary], text_path, result_path):
+    with open(text_path, "r", encoding="utf-8") as f:
         textfile = f.read()
 
     words = textfile.split()
     dictionary = storage_factory()
 
     for word in words:
-        value = dictionary.find(word) or 0
-        dictionary.insert(word, value + 1)
+        value = dictionary.find(word.lower()) or 0
+        dictionary.insert(word.lower(), value + 1)
+
+    representation = dictionary.repres()
+
+    with open(result_path, "w", encoding="utf-8") as fr:
+        fr.write(representation)
 
 
-def execution_time(path, storage):
+def execution_time(storage, text_path, result_path):
     start = timeit.default_timer()
-    count_words(path, storage)
+    count_words(storage, text_path, result_path)
     end = timeit.default_timer()
     time_taken = end - start
     return time_taken
 
 def main():
-    parser = argparse.ArgumentParser(description="Measures the time the calculation of word frequency map took")
-    parser.add_argument("path")
-    parser.add_argument("storage", type=create_storage, help="Storage type (ArrayMap, TreeMap or PythonDict)")
+    parser = argparse.ArgumentParser(
+        description="Measures the time the calculation of word frequency map took"
+        )
+    parser.add_argument("storage", type=create_storage, help="Storage type (array, tree or dict)")
+    parser.add_argument("pathtext")
+    parser.add_argument("pathresult")
     arguments = parser.parse_args()
 
-    file_path = Path(arguments.path)
-    if not file_path.exists():
+    text_path = Path(arguments.pathtext)
+    if not text_path.exists():
         print("The target directory doesn't exist")
         raise SystemExit(1)
 
-    output = execution_time(file_path, arguments.storage)
+    result_path = Path(arguments.pathresult)
+    if not result_path.exists():
+        print("The target directory doesn't exist")
+        raise SystemExit(1)
+
+    output = execution_time(arguments.storage, text_path, result_path)
     print(f"Time taken: {output}")
 
 if __name__ == "__main__":

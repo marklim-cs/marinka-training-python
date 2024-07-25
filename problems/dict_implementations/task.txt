@@ -1,0 +1,26 @@
+
+Compare 3 dictionary implementations:
+- python dict
+- TreeMap
+- ArrayMap
+
+Write a console app (use python argparse module) which takes the following cmdline arguments:
+- storage: "dict" | "tree" | "array" - data structure used for data storage
+- src : path - path to a file containing some english words
+
+The app should then find a word frequency map using the specified data structure
+and measure how much time the calculation took (using python `timeit`). 
+
+Print time (in miliseconds) to the console
+
+Try with files containing 100, 10000, 1000000 words
+
+Implement a ArrayMap data structure, which allows to store
+and search key-value pairs (just like python `dict`). Interface:
+- insert(self, key, value) - insert/replace a value for a given key
+- find(self, key) -> object | None - find a value by a key and return it. 
+Returns None if key isn't found
+- __len__(self) -> int - wiadomo
+
+ArrayMap should use one or more python list fields to store data
+
