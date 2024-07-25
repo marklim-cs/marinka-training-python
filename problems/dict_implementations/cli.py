@@ -185,7 +185,7 @@ def main():
 
     result_path = Path(arguments.pathresult)
     if not result_path.exists():
-        print("The target directory doesn't exist")
+        print("The target file doesn't exist")
         raise SystemExit(1)
 
     output = execution_time(arguments.storage, text_path, result_path)
