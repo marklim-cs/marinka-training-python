@@ -44,19 +44,21 @@ class PriorityQueue:
     def _heapify_down(self, arr: list, i: int):
         if i > len(arr)-1:
             return
-        left_child_index = 2 * i + 1
-        right_child_index = 2 * i + 2
-
         current_element = i
         smallest = i
+
+        left_child_index = 2 * i + 1
+        right_child_index = 2 * i + 2
 
         if left_child_index < len(arr) and self.heap[left_child_index][0] < self.heap[smallest][0]:
             smallest = left_child_index
         if right_child_index < len(arr) and self.heap[right_child_index][0] < self.heap[smallest][0]:
             smallest = right_child_index
 
-        self.heap[smallest], self.heap[current_element] = self.heap[current_element], self.heap[smallest]
+        if smallest != current_element:
+            self.heap[smallest], self.heap[current_element] = self.heap[current_element], self.heap[smallest]
+            self._heapify_down(arr, smallest)
+        return
 
-        self._heapify_down(arr, smallest)
-
-        
+    def show(self):
+        return self.heap
