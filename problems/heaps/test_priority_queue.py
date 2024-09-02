@@ -25,6 +25,7 @@ class TestPriorityQueue(unittest.TestCase):
         arr.push(2, "cow")
         arr.push(4, "bee")
         self.assertEqual(arr.pop(), (1, "apple"))
+        self.assertEqual(arr.pop(), (2, "cow"))
 
     def test_pop_empty(self):
         arr = PriorityQueue()
