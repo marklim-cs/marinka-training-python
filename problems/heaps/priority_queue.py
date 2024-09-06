@@ -6,16 +6,17 @@ find non_leaf node = n//2 - 1
 where n = len(arr)
 '''
 from typing import Any
+import copy
 
 class PriorityQueue:
     def __init__(self):
-        self.heap = []
+        self._heap = []
 
     def push(self, priority: int, value: Any):
         data = (priority, value)
-        self.heap.append(data)
+        self._heap.append(data)
 
-        self._heapify_up(len(self.heap)-1)
+        self._heapify_up(len(self._heap)-1)
 
     def _heapify_up(self, i):
         if i == 0:
@@ -23,19 +24,19 @@ class PriorityQueue:
         inserted_node_indx = i
         parent_node_indx = (i - 1) // 2
 
-        if self.heap[inserted_node_indx][0] < self.heap[parent_node_indx][0]:
-            self.heap[inserted_node_indx], self.heap[parent_node_indx] = self.heap[parent_node_indx], self.heap[inserted_node_indx]
+        if self._heap[inserted_node_indx][0] < self._heap[parent_node_indx][0]:
+            self._heap[inserted_node_indx], self._heap[parent_node_indx] = self._heap[parent_node_indx], self._heap[inserted_node_indx]
             self._heapify_up(parent_node_indx)
         return
 
     def pop(self) -> Any:
-        if not self.heap:
+        if not self._heap:
             return None
 
-        root_result = self.heap[0]
-        last_element_index = len(self.heap)-1
-        self.heap[0] = self.heap[last_element_index]
-        self._heapify_down(self.heap, 0)
+        root_result = self._heap[0]
+        last_element_index = len(self._heap)-1
+        self._heap[0] = self._heap[last_element_index]
+        self._heapify_down(self._heap, 0)
 
         return root_result
 
@@ -50,15 +51,16 @@ class PriorityQueue:
         left_child_index = 2 * i + 1
         right_child_index = 2 * i + 2
 
-        if left_child_index < len(arr) and self.heap[left_child_index][0] < self.heap[smallest][0]:
+        if left_child_index < len(arr) and self._heap[left_child_index][0] < self._heap[smallest][0]:
             smallest = left_child_index
-        if right_child_index < len(arr) and self.heap[right_child_index][0] < self.heap[smallest][0]:
+        if right_child_index < len(arr) and self._heap[right_child_index][0] < self._heap[smallest][0]:
             smallest = right_child_index
 
         if smallest != current_element:
-            self.heap[smallest], self.heap[current_element] = self.heap[current_element], self.heap[smallest]
+            self._heap[smallest], self._heap[current_element] = self._heap[current_element], self._heap[smallest]
             self._heapify_down(arr, smallest)
         return
 
     def show(self):
-        return self.heap
+        deep_copy_heap = copy.deepcopy(self._heap)
+        return deep_copy_heap
